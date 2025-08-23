@@ -1,0 +1,52 @@
+repos:
+- hooks:
+  - id: check-added-large-files
+  - id: check-docstring-first
+  - id: check-json
+  - id: check-yaml
+  - id: check-toml
+  - id: debug-statements
+  - id: end-of-file-fixer
+  - args:
+    - --pytest-test-first
+    id: name-tests-test
+  - id: requirements-txt-fixer
+  - id: trailing-whitespace
+  repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+- hooks:
+  - id: commitizen
+  repo: https://github.com/commitizen-tools/commitizen
+  rev: v4.8.3
+- hooks:
+  - id: isort
+    name: isort (python)
+  repo: https://github.com/pycqa/isort
+  rev: 6.0.1
+- hooks:
+  - id: uv-lock
+  - id: uv-export
+  repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.8.13
+- hooks:
+  - args:
+    - --fix
+    id: ruff
+    types_or:
+    - python
+    - pyi
+  - id: ruff-format
+    types_or:
+    - python
+    - pyi
+  repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.12.10
+- hooks:
+  - additional_dependencies: []
+    args:
+    - --strict
+    - --ignore-missing-imports
+    exclude: tests/|docs/|docs_sphinx/
+    id: mypy
+  repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.13.0
