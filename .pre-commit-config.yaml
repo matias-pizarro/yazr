@@ -1,52 +1,49 @@
 repos:
-- hooks:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
   - id: check-added-large-files
   - id: check-docstring-first
   - id: check-json
-  - id: check-yaml
   - id: check-toml
+  - id: check-yaml
   - id: debug-statements
   - id: end-of-file-fixer
-  - args:
-    - --pytest-test-first
-    id: name-tests-test
+  - id: name-tests-test
+    args: [ --pytest-test-first ]
   - id: requirements-txt-fixer
   - id: trailing-whitespace
-  repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v6.0.0
-- hooks:
-  - id: commitizen
-  repo: https://github.com/commitizen-tools/commitizen
+
+- repo: https://github.com/commitizen-tools/commitizen
   rev: v4.8.3
-- hooks:
+  hooks:
+  - id: commitizen
+
+- repo: https://github.com/pycqa/isort
+  rev: 6.0.1
+  hooks:
   - id: isort
     name: isort (python)
-  repo: https://github.com/pycqa/isort
-  rev: 6.0.1
-- hooks:
-  - id: uv-lock
-  - id: uv-export
-  repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.8.13
-- hooks:
-  - args:
-    - --fix
-    id: ruff
-    types_or:
-    - python
-    - pyi
-  - id: ruff-format
-    types_or:
-    - python
-    - pyi
-  repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.12.10
-- hooks:
-  - additional_dependencies: []
-    args:
-    - --strict
-    - --ignore-missing-imports
-    exclude: tests/|docs/|docs_sphinx/
-    id: mypy
-  repo: https://github.com/pre-commit/mirrors-mypy
+
+- repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.8.13      # uv version
+  hooks:
+  - id: uv-lock    # Update the uv lockfile
+  - id: uv-export  # autoexport uv.lock to requirements.txt
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.12.10      # Ruff version
+  hooks:
+  - id: ruff         # Run the linter
+    types_or: [ python, pyi ]
+    args: [ --fix ]
+  - id: ruff-format  # Run the formatter
+    types_or: [ python, pyi ]
+
+- repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.13.0
+  hooks:
+  - id: mypy
+    args: [ --strict, --ignore-missing-imports ]
+    additional_dependencies: []
+    exclude: tests/|docs/|docs_sphinx/
